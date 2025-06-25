@@ -1,6 +1,9 @@
 package com.mgaye.bankapp.service;
 
 import lombok.RequiredArgsConstructor;
+
+import java.time.Instant;
+
 import org.springframework.stereotype.Service;
 
 import com.mgaye.bankapp.model.AuditLog;
@@ -12,11 +15,20 @@ public class AuditService {
     private final AuditLogRepository auditLogRepository;
 
     public void log(String action, String details, Long userId) {
-        AuditLog log = AuditLog.builder()
-                .action(action)
-                .details(details)
-                .userId(userId)
-                .build();
+        // AuditLog log = AuditLog.builder()
+        // .action(action)
+        // .details(details)
+        // .userId(userId)
+        // .build();
+        // auditLogRepository.save(log);
+        // |*******| You can user builder pattern or direct instantiation as below
+
+        AuditLog log = new AuditLog();
+        log.setAction(action);
+        log.setDetails(details);
+        log.setUserId(userId);
+        log.setCreatedAt(Instant.now());
         auditLogRepository.save(log);
+
     }
 }

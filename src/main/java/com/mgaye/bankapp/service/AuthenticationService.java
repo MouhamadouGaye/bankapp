@@ -14,6 +14,8 @@ import com.mgaye.bankapp.model.User;
 import com.mgaye.bankapp.repository.UserRepository;
 import com.mgaye.bankapp.security.JwtService;
 
+import jakarta.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -24,6 +26,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final AuditService auditService;
 
+    @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
                 .firstName(request.getFirstName())
@@ -45,5 +48,15 @@ public class AuthenticationService {
         auditService.log("USER_LOGIN", "User logged in: " + user.getEmail(), user.getId());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder().token(jwtToken).build();
+    }
+
+    public AuthenticationResponse getAllUsers() {
+        var users = userRepository.findAll();
+        StringBuilder userList = new StringBuilder("Registered Users:\n");
+        for (User user : users) {
+            userList.append(user.getEmail()).append("\n");
+        }
+        auditService.log("GET_ALL_USERS", userList.toString(), null);
+        return AuthenticationResponse.builder().token(userList.toString()).build();
     }
 }

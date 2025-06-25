@@ -18,14 +18,14 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @PostMapping
-    public ResponseEntity<AccountResponse> createAccount(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(accountService.createAccount(user));
-    }
-
     @GetMapping
     public ResponseEntity<List<AccountResponse>> getUserAccounts(@AuthenticationPrincipal User user) {
         return ResponseEntity.ok(accountService.getAccountsForUser(user.getId()));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<AccountResponse> createAccount(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(accountService.createAccount(user));
     }
 
     @GetMapping("/{iban}")

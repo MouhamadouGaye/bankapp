@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.Instant;
 
+import org.hibernate.Hibernate;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,6 +22,22 @@ public class AuditLog {
     private String action;
     private String details;
     private Long userId;
-    @Column(name = "created_at", updatable = false)
-    private Instant createdAt = Instant.now();
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = Instant.now();
+    }
+
+    // This is solid for most cases. But if you're using Hibernate or JPA lifecycle
+    // callbacks,
+    // it’s even better to do this instead:
+
+    // @Column(name = "created_at", nullable = false, updatable = false)
+    // private Instant createdAt ;
+    // @PrePersist
+    // public void prePersist() {
+    // this.createdAt = Instant.now();
+    // }
 }
