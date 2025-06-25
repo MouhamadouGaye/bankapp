@@ -2,7 +2,8 @@ package com.mgaye.bankapp.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
-import java.math.BigDecimal;
+
+import com.mgaye.bankapp.model.Role;
 
 @Data
 @Builder
@@ -19,4 +20,5 @@ public class RegisterRequest {
     @NotBlank
     @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
+    private Role role;
 }

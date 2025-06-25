@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public List<UserResponse> getAdminUsers() {
         return userRepository.findAll().stream()
                 .filter(user -> user.getRole() == Role.ADMIN)
-                .map(modelMapper::map)
+                .map(ModelMapper::map)
                 .collect(Collectors.toList());
     }
 }

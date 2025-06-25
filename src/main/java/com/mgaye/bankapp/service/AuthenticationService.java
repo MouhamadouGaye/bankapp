@@ -28,12 +28,13 @@ public class AuthenticationService {
 
     @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
+        Role userRole = request.getRole() != null ? request.getRole() : Role.USER;
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER) // Default role
+                .role(userRole) // Default role
                 .build();
         var savedUser = userRepository.save(user);
         auditService.log("USER_REGISTER", "New user registered: " + savedUser.getEmail(), savedUser.getId());

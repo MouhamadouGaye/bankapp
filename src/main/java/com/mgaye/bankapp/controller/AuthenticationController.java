@@ -13,6 +13,7 @@ import com.mgaye.bankapp.dto.request.AuthenticationRequest;
 import com.mgaye.bankapp.dto.request.RegisterRequest;
 import com.mgaye.bankapp.dto.response.AuthenticationResponse;
 import com.mgaye.bankapp.service.AuthenticationService;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -26,7 +27,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.getAllUsers());
     }
 
-    @PostMapping("/register")
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthenticationResponse> register(@Valid @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(service.register(request));
     }

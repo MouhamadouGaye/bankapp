@@ -8,7 +8,7 @@ import com.mgaye.bankapp.model.User;
 @Component
 public class ModelMapper {
 
-    public UserResponse map(User user) {
+    public static UserResponse map(User user) {
         UserResponse response = new UserResponse();
         response.setId(user.getId());
         response.setEmail(user.getEmail());

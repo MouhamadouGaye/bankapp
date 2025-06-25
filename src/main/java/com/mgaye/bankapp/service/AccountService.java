@@ -8,6 +8,7 @@ import com.mgaye.bankapp.dto.response.AccountResponse;
 import com.mgaye.bankapp.model.Account;
 import com.mgaye.bankapp.model.User;
 import com.mgaye.bankapp.repository.AccountRepository;
+import com.mgaye.bankapp.repository.UserRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,16 +20,34 @@ import java.util.stream.Collectors;
 public class AccountService {
 
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
     private final AuditService auditService;
 
-    public AccountResponse createAccount(User user) {
+    // public AccountResponse createAccount(User user) {
+    // Account newAccount = Account.builder()
+    // .iban(generateIban())
+    // .balance(BigDecimal.ZERO)
+    // .user(user)
+    // .build();
+    // Account savedAccount = accountRepository.save(newAccount);
+    // auditService.log("ACCOUNT_CREATED", "New account created with IBAN: " +
+    // savedAccount.getIban(), user.getId());
+    // return mapToAccountResponse(savedAccount);
+    // }
+
+    public AccountResponse createAccountForUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         Account newAccount = Account.builder()
                 .iban(generateIban())
                 .balance(BigDecimal.ZERO)
                 .user(user)
                 .build();
+
         Account savedAccount = accountRepository.save(newAccount);
-        auditService.log("ACCOUNT_CREATED", "New account created with IBAN: " + savedAccount.getIban(), user.getId());
+        auditService.log("ACCOUNT_CREATED", "New account created with IBAN: " +
+                savedAccount.getIban(), user.getId());
         return mapToAccountResponse(savedAccount);
     }
 
