@@ -1,10 +1,13 @@
 package com.mgaye.bankapp.controller;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.mgaye.bankapp.dto.request.CreateAccountRequest;
 import com.mgaye.bankapp.dto.response.AccountResponse;
@@ -12,6 +15,7 @@ import com.mgaye.bankapp.model.User;
 import com.mgaye.bankapp.service.AccountService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -31,9 +35,16 @@ public class AccountController {
     // User user) {
     // return ResponseEntity.ok(accountService.createAccount(user));
     // }
-    @PostMapping("/admin/accounts")
+    // @PostMapping("/admin/accounts")
+    // @PreAuthorize("hasRole('ADMIN')")
+    // public ResponseEntity<AccountResponse> createAccountForUser(@RequestParam
+    // Long userId) {
+    // return ResponseEntity.ok(accountService.createAccountForUser(userId));
+    // }
+
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AccountResponse> createAccountForUser(@RequestParam Long userId) {
+    @PostMapping("/admin/accounts")
+    public ResponseEntity<AccountResponse> createAccountForUser(@RequestParam UUID userId) {
         return ResponseEntity.ok(accountService.createAccountForUser(userId));
     }
 

@@ -1,12 +1,14 @@
 package com.mgaye.bankapp.dto.response;
 
+import java.util.UUID;
+
 import com.mgaye.bankapp.model.Role;
 
 import lombok.Data;
 
 @Data
 public class UserResponse {
-    private Long id;
+    private UUID id;
     private String email;
     private String firstName;
     private String lastName;

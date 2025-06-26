@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -16,8 +17,8 @@ import java.time.Instant;
 @Table(name = "transactions")
 public class Transaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private BigDecimal amount;
     @Enumerated(EnumType.STRING)
     private TransactionType type;

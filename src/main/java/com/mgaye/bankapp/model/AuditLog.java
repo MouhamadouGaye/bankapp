@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.Instant;
+import java.util.UUID;
 
 import org.hibernate.Hibernate;
 
@@ -17,11 +18,11 @@ import org.hibernate.Hibernate;
 @Table(name = "audit_logs")
 public class AuditLog {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String action;
     private String details;
-    private Long userId;
+    private UUID userId;
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 

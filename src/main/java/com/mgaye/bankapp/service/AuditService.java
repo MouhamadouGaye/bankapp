@@ -3,6 +3,7 @@ package com.mgaye.bankapp.service;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import com.mgaye.bankapp.repository.AuditLogRepository;
 public class AuditService {
     private final AuditLogRepository auditLogRepository;
 
-    public void log(String action, String details, Long userId) {
+    public void log(String action, String details, UUID userId) {
         // AuditLog log = AuditLog.builder()
         // .action(action)
         // .details(details)

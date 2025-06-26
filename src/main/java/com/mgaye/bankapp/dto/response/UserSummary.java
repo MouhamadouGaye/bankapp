@@ -1,23 +1,22 @@
 package com.mgaye.bankapp.dto.response;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
-import com.mgaye.bankapp.model.User;
+import com.mgaye.bankapp.model.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// Account
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class AccountResponse {
+@AllArgsConstructor
+public class UserSummary {
     private UUID id;
-    private String iban;
-    private BigDecimal balance;
-    private UserSummary user;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Role role;
 }
