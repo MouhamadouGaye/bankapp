@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.mgaye.bankapp.model.Role;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data

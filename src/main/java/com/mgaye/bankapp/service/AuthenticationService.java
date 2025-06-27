@@ -1,14 +1,20 @@
 package com.mgaye.bankapp.service;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mgaye.bankapp.dto.mapper.ModelMapper;
 import com.mgaye.bankapp.dto.request.AuthenticationRequest;
 import com.mgaye.bankapp.dto.request.RegisterRequest;
 import com.mgaye.bankapp.dto.response.AuthenticationResponse;
+import com.mgaye.bankapp.dto.response.UserResponse;
 import com.mgaye.bankapp.model.Role;
 import com.mgaye.bankapp.model.User;
 import com.mgaye.bankapp.repository.UserRepository;
@@ -25,6 +31,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final AuditService auditService;
+    private final ModelMapper modelMapper;
 
     @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
@@ -60,4 +67,13 @@ public class AuthenticationService {
         auditService.log("GET_ALL_USERS", userList.toString(), null);
         return AuthenticationResponse.builder().token(userList.toString()).build();
     }
+
+    public List<UserResponse> getALLUsers() {
+        List<UserResponse> users = userRepository.findAll().stream()
+                .map(ModelMapper::map)
+                .collect(Collectors.toList());
+        auditService.log("GET_ALL_USERS", users.toString(), null);
+        return users;
+    }
+
 }

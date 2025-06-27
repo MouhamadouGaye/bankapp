@@ -3,6 +3,7 @@ package com.mgaye.bankapp.dto.response;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import com.mgaye.bankapp.model.AccountType;
 import com.mgaye.bankapp.model.User;
 
 import lombok.AllArgsConstructor;
@@ -19,5 +20,7 @@ public class AccountResponse {
     private UUID id;
     private String iban;
     private BigDecimal balance;
+    private AccountType type;
+    private String currency;
     private UserSummary user;
 }

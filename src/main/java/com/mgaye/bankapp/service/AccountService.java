@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mgaye.bankapp.dto.response.AccountResponse;
 import com.mgaye.bankapp.dto.response.UserSummary;
 import com.mgaye.bankapp.model.Account;
+import com.mgaye.bankapp.model.AccountType;
 import com.mgaye.bankapp.model.Role;
 import com.mgaye.bankapp.model.User;
 import com.mgaye.bankapp.repository.AccountRepository;
@@ -91,6 +92,8 @@ public class AccountService {
         Account account = Account.builder()
                 .iban(generateIban())
                 .balance(BigDecimal.ZERO)
+                .type(AccountType.CHECKING) // Default account type
+                .currency("EUR")
                 .user(user)
                 .build();
 
@@ -131,6 +134,8 @@ public class AccountService {
                 .id(account.getId())
                 .iban(account.getIban())
                 .balance(account.getBalance())
+                .currency("EUR") // Default currency, can be extended
+                .type(AccountType.CHECKING)
                 .user(UserSummary.builder().id(account.getUser().getId())
                         .firstName(account.getUser().getFirstName())
                         .lastName(account.getUser().getLastName())

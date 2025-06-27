@@ -21,6 +21,11 @@ public class Account {
     @Column(unique = true)
     private String iban;
     private BigDecimal balance;
+    private String currency;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private AccountType type;
 
     // @ManyToOne(fetch = FetchType.LAZY)
     // @JoinColumn(name = "user_id", nullable = false)
